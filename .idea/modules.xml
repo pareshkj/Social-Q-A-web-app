@@ -3,6 +3,12 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Social-Q-A-web-app.iml" filepath="$PROJECT_DIR$/.idea/Social-Q-A-web-app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/quora-api/quora-api.iml" filepath="$PROJECT_DIR$/quora-api/quora-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/quora-api/quora-api.iml" filepath="$PROJECT_DIR$/quora-api/quora-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/quora-db/quora-db.iml" filepath="$PROJECT_DIR$/quora-db/quora-db.iml" />
+      <module fileurl="file://$PROJECT_DIR$/quora-db/quora-db.iml" filepath="$PROJECT_DIR$/quora-db/quora-db.iml" />
+      <module fileurl="file://$PROJECT_DIR$/quora-service/quora-service.iml" filepath="$PROJECT_DIR$/quora-service/quora-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/quora-service/quora-service.iml" filepath="$PROJECT_DIR$/quora-service/quora-service.iml" />
     </modules>
   </component>
 </project>
