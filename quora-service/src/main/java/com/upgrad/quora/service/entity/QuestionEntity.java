@@ -1,9 +1,6 @@
 package com.upgrad.quora.service.entity;
-
-
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -12,6 +9,12 @@ import java.time.ZonedDateTime;
 @Entity
 @Table(name = "question")
 
+        @NamedQueries({
+
+                @NamedQuery(name = "questionByUuid", query = "select q from QuestionEntity q where q.uuid = :uuid "),
+                @NamedQuery(name = "getAllQuestions", query = "select q from QuestionEntity q")
+
+        })
 
 public class QuestionEntity {
 
