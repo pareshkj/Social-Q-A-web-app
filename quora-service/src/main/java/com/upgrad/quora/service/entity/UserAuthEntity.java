@@ -1,17 +1,38 @@
 package com.upgrad.quora.service.entity;
 
 
+
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
 import java.time.ZonedDateTime;
 
 @Entity
 @Table(name = "user_auth", schema = "quora")
 public class UserAuthEntity {
+
+import java.io.Serializable;
+import java.sql.Timestamp;
+
+
+@Entity
+@Table(name = "user_auth", schema = "public")
+@NamedQueries({
+        @NamedQuery(name = "userAuthByAccess" , query = "select ut from UserAuthEntity ut where ut.accessToken = :accessToken ")
+})
+public class UserAuthEntity implements Serializable {
+
+
 
     @Id
     @Column(name = "ID")
@@ -22,6 +43,7 @@ public class UserAuthEntity {
     @Size(max = 200)
     private String uuid;
 
+
     @ManyToOne()
     @JoinColumn(name = "USER_ID")
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -30,10 +52,20 @@ public class UserAuthEntity {
     @Column(name = "ACCESS_TOKEN")
     @Size(max = 500)
     @NotNull
+
+    @ManyToOne
+    @JoinColumn(name = "USER_ID")
+    private UserEntity user;
+
+    @Column(name = "ACCESS_TOKEN")
+    @NotNull
+    @Size(max = 500)
+
     private String accessToken;
 
     @Column(name = "EXPIRES_AT")
     @NotNull
+
     private ZonedDateTime expiresAt;
 
     @Column(name = "LOGOUT_AT")
@@ -43,6 +75,18 @@ public class UserAuthEntity {
     @NotNull
     private ZonedDateTime loginAt;
 
+    private Timestamp expiresAt;
+
+    @Column(name = "LOGIN_AT")
+    @NotNull
+    private Timestamp loginAt;
+
+    @Column(name = "LOGOUT_AT")
+    private Timestamp logoutAt;
+
+
+
+
     public Integer getId() {
         return id;
     }
@@ -50,6 +94,7 @@ public class UserAuthEntity {
     public void setId(Integer id) {
         this.id = id;
     }
+
 
     public String getUuid() {
         return uuid;
@@ -64,6 +109,13 @@ public class UserAuthEntity {
     }
 
     public void setUser(UsersEntity user) {
+
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+
         this.user = user;
     }
 
@@ -74,6 +126,7 @@ public class UserAuthEntity {
     public void setAccessToken(String accessToken) {
         this.accessToken = accessToken;
     }
+
 
     public ZonedDateTime getExpiresAt() {
         return expiresAt;
@@ -97,6 +150,55 @@ public class UserAuthEntity {
 
     public void setLoginAt(ZonedDateTime loginAt) {
         this.loginAt = loginAt;
+    }
+}
+
+
+    public Timestamp getExpiresAt() {
+        return expiresAt;
+    }
+
+    public void setExpiresAt(Timestamp expiresAt) {
+        this.expiresAt = expiresAt;
+    }
+
+    public Timestamp getLoginAt() {
+        return loginAt;
+    }
+
+    public void setLoginAt(Timestamp loginAt) {
+        this.loginAt = loginAt;
+    }
+
+    public Timestamp getLogoutAt() {
+        return logoutAt;
+    }
+
+    public void setLogoutAt(Timestamp logoutAt) {
+        this.logoutAt = logoutAt;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return new EqualsBuilder().append(this, obj).isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder().append(this).hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
     }
 }
 
