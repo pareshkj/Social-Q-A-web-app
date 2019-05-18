@@ -16,5 +16,4 @@ public class UserCreate {
         entityManager.persist(userEntity);
         return userEntity;
     }
-
 }
