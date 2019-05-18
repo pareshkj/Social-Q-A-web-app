@@ -8,10 +8,6 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
-
-/**
- * DAO class for Question related database operations.
- */
 @Repository
 public class QuestionDao {
 
@@ -24,23 +20,13 @@ public class QuestionDao {
     private EntityManager entityManager;
 
 
-    /**
-     * method used for creating question instance in database.
-     *
-     * @param question question object to be stored
-     * @return created question object
-     */
+
     public Question createQuestion(Question question) {
         entityManager.persist(question);
         return question;
     }
 
-    /**
-     * method used for getting all questions for a specific users uuid.
-     *
-     * @param uuId authorized user uuid
-     * @return List of questions pertaining to the user
-     */
+
     public List<Question> getAllQuestionsForUser(String uuId) {
         try {
             return entityManager
@@ -52,11 +38,7 @@ public class QuestionDao {
         }
     }
 
-    /**
-     * method used for getting all questions.
-     *
-     * @return list of all questions
-     */
+
     public List<Question> getAllQuestions() {
         try {
             return entityManager
@@ -67,12 +49,7 @@ public class QuestionDao {
         }
     }
 
-    /**
-     * method used for getting question for the same owner
-     *
-     * @param questionUuId
-     * @return Question object
-     */
+
     public Question getQuestion(String questionUuId) {
         try {
             return entityManager
@@ -84,21 +61,12 @@ public class QuestionDao {
         }
     }
 
-    /**
-     * method used for editing the question details in database.
-     *
-     * @param question question object to be updated
-     */
+
     public Question editQuestion(Question question) {
         entityManager.persist(question);
         return question;
     }
 
-    /**
-     * method used for deleting the question
-     *
-     * @param question question object to be deleted
-     */
     public void deleteQuestion(Question question) {
         entityManager.remove(question);
     }

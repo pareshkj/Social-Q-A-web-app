@@ -92,6 +92,11 @@
                         <artifactId>swagger-codegen-generators</artifactId>
                         <version>1.0.0-rc0</version>
                     </dependency>
+                    <dependency>
+                        <groupId>org.postgresql</groupId>
+                        <artifactId>postgresql</artifactId>
+                        <version>42.2.2</version>
+                    </dependency>
                 </dependencies>
 
                 <executions>
