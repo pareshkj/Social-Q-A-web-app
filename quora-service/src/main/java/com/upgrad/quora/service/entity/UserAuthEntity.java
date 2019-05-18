@@ -8,46 +8,53 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
-import java.sql.Timestamp;
+import java.time.ZonedDateTime;
 
 
 @Entity
-@Table(name = "user_auth", schema = "public")
+@Table(name = "USER_AUTH", schema = "public")
 @NamedQueries({
-        @NamedQuery(name = "userAuthByAccess" , query = "select ut from UserAuthEntity ut where ut.accessToken = :accessToken ")
+        @NamedQuery(name = "userAuthTokenByAccessToken", query = "select ut from UserAuthEntity ut where ut.accessToken = :accessToken and ut.logoutAt is null"),
+        @NamedQuery(name = "checkAuthToken", query = "select ut from UserAuthEntity ut where ut.accessToken = :accessToken"),
+        @NamedQuery(name = "deleteAuthTokenByUuid", query = "delete  from UserAuthEntity ut where ut.uuid=:uuid")
 })
-public class UserAuthEntity implements Serializable {
-
+public class UserAuthEntity {
 
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+
+    //@OneToOne
+    //@JoinColumn(name = "uuid", referencedColumnName = "uuid")
     @Column(name = "uuid")
+    @NotNull
     @Size(max = 200)
     private String uuid;
 
+
     @ManyToOne
+    @NotNull
     @JoinColumn(name = "USER_ID")
     private UserEntity user;
 
-    @Column(name = "ACCESS_TOKEN")
+    @Column(name = "access_token")
     @NotNull
     @Size(max = 500)
     private String accessToken;
 
-    @Column(name = "EXPIRES_AT")
-    @NotNull
-    private Timestamp expiresAt;
 
     @Column(name = "LOGIN_AT")
     @NotNull
-    private Timestamp loginAt;
+    private ZonedDateTime loginAt;
+
+    @Column(name = "EXPIRES_AT")
+    @NotNull
+    private ZonedDateTime expiresAt;
 
     @Column(name = "LOGOUT_AT")
-    private Timestamp logoutAt;
+    private ZonedDateTime logoutAt;
 
 
 
@@ -55,56 +62,78 @@ public class UserAuthEntity implements Serializable {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public UserEntity getUser() {
-        return user;
-    }
-
-    public void setUser(UserEntity user) {
-        this.user = user;
-    }
-
-    public String getAccessToken() {
-        return accessToken;
-    }
-
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
-    }
-
-    public Timestamp getExpiresAt() {
-        return expiresAt;
-    }
-
-    public void setExpiresAt(Timestamp expiresAt) {
-        this.expiresAt = expiresAt;
-    }
-
-    public Timestamp getLoginAt() {
-        return loginAt;
-    }
-
-    public void setLoginAt(Timestamp loginAt) {
-        this.loginAt = loginAt;
-    }
-
-    public Timestamp getLogoutAt() {
-        return logoutAt;
-    }
-
-    public void setLogoutAt(Timestamp logoutAt) {
-        this.logoutAt = logoutAt;
-    }
 
     public String getUuid() {
         return uuid;
     }
 
+
+
     public void setUuid(String uuid) {
         this.uuid = uuid;
+    }
+
+
+    public UserEntity getUser() {
+        return user;
+    }
+
+
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+
+
+    public void setUser(UserEntity user) {
+        this.user = user;
+    }
+
+
+
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
+
+
+    public ZonedDateTime getLoginAt() {
+        return loginAt;
+    }
+
+
+
+    public void setLoginAt(ZonedDateTime loginAt) {
+        this.loginAt = loginAt;
+    }
+
+
+
+    public ZonedDateTime getExpiresAt() {
+        return expiresAt;
+    }
+
+
+
+    public void setExpiresAt(ZonedDateTime expiresAt) {
+        this.expiresAt = expiresAt;
+    }
+
+
+    public ZonedDateTime getLogoutAt() {
+        return logoutAt;
+    }
+
+
+
+    public void setLogoutAt(ZonedDateTime logoutAt) {
+        this.logoutAt = logoutAt;
     }
 
     @Override

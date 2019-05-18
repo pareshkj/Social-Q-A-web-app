@@ -1,5 +1,6 @@
 package com.upgrad.quora.service.entity;
 
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -8,19 +9,22 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
 
+/**
+ * This class is used for mapping all attributes of the table USERS.
+ * Each instance of class UserEntity represents a row in table USERS
+ */
 @Entity
-@Table(name = "USERS", schema = "public")
+@Table(name = "users", schema = "public")
 @NamedQueries(
         {
-                @NamedQuery(name = "userByUuid", query = "select u from UserEntity u where u.uuid = :uuid"),
-                @NamedQuery(name = "userByEmail", query = "select u from UserEntity u where u.email =:email")
+                @NamedQuery(name = "userByUserName", query = "select u from UserEntity as u where u.username=:username"),
+                @NamedQuery(name = "userByUuid", query = "select u from UserEntity as u where u.uuid=:uuid"),
+                @NamedQuery(name = "userByEmail", query = "select u from UserEntity as u where u.email=:email"),
+                //@NamedQuery(name = "userByUserName", query = "select u from UserEntity as u where u.username=:username")
         }
 )
-
-
-public class UserEntity implements Serializable{
+public class UserEntity {
 
     @Id
     @Column(name = "id")
@@ -29,22 +33,24 @@ public class UserEntity implements Serializable{
 
     @Column(name = "uuid")
     @Size(max = 200)
+    @NotNull
     private String uuid;
 
-    @Column(name = "first_Name")
+    @Column(name = "firstname")
     @NotNull
     @Size(max = 30)
     private String firstName;
 
-    @Column(name = "last_Name")
+    @Column(name = "lastname")
     @NotNull
     @Size(max = 30)
     private String lastName;
 
-    @Column(name = "user_Name")
+    //unique indicates the value in this column should be unique
+    @Column(name = "username", unique = true)
     @NotNull
     @Size(max = 30)
-    private String userName;
+    private String username;
 
     @Column(name = "email")
     @NotNull
@@ -52,46 +58,35 @@ public class UserEntity implements Serializable{
     private String email;
 
     @Column(name = "password")
+    @NotNull
+    @Size(max = 255)
     private String password;
 
     @Column(name = "salt")
     @NotNull
     @Size(max = 200)
-    //@ToStringExclude
     private String salt;
 
     @Column(name = "country")
-    @NotNull
     @Size(max = 30)
     private String country;
 
     @Column(name = "aboutme")
-    @NotNull
     @Size(max = 50)
-    private String aboutme;
+    private String aboutMe;
 
-    @Column(name="dob")
-    @NotNull
+    @Column(name = "dob")
     @Size(max = 30)
     private String dob;
 
     @Column(name = "role")
-    @NotNull
     @Size(max = 30)
     private String role;
 
     @Column(name = "contactnumber")
-    @NotNull
     @Size(max = 30)
-    private String contactnumber;
+    private String contactNumber;
 
-
-
-
-    @Override
-    public boolean equals(Object obj) {
-        return new EqualsBuilder().append(this, obj).isEquals();
-    }
 
     public Integer getId() {
         return id;
@@ -125,12 +120,12 @@ public class UserEntity implements Serializable{
         this.lastName = lastName;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {
@@ -165,12 +160,12 @@ public class UserEntity implements Serializable{
         this.country = country;
     }
 
-    public String getAboutme() {
-        return aboutme;
+    public String getAboutMe() {
+        return aboutMe;
     }
 
-    public void setAboutme(String aboutme) {
-        this.aboutme = aboutme;
+    public void setAboutMe(String aboutMe) {
+        this.aboutMe = aboutMe;
     }
 
     public String getDob() {
@@ -189,12 +184,17 @@ public class UserEntity implements Serializable{
         this.role = role;
     }
 
-    public String getContactnumber() {
-        return contactnumber;
+    public String getContactNumber() {
+        return contactNumber;
     }
 
-    public void setContactnumber(String contactnumber) {
-        this.contactnumber = contactnumber;
+    public void setContactNumber(String contactNumber) {
+        this.contactNumber = contactNumber;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return new EqualsBuilder().append(this, obj).isEquals();
     }
 
     @Override
@@ -206,6 +206,5 @@ public class UserEntity implements Serializable{
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
     }
-
 
 }
