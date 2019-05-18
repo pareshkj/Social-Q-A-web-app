@@ -1,13 +1,57 @@
 package com.upgrad.quora.service.entity;
 
+
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import java.time.ZonedDateTime;
+
+@Entity
+@Table(name = "answer")
+
+public class AnswerEntity {
+
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column(name = "uuid")
+    @Size(max = 200)
+    private String uuid;
+
+    @Column(name = "ans")
+    @Size(max = 255)
+    @NotNull
+    private String ans;
+
+    @Column(name = "date")
+    @NotNull
+    private ZonedDateTime date;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private UsersEntity user;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "question_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private QuestionEntity question;
+
+
+
 import java.io.Serializable;
 import java.sql.Timestamp;
 
@@ -45,6 +89,7 @@ public class AnswerEntity implements Serializable{
     @JoinColumn(name = "Question_ID")
     private QuestionEntity question;
 
+
     public Integer getId() {
         return id;
     }
@@ -53,11 +98,19 @@ public class AnswerEntity implements Serializable{
         this.id = id;
     }
 
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+
     public int getUuid() {
         return uuid;
     }
 
     public void setUuid(int uuid) {
+
         this.uuid = uuid;
     }
 
@@ -68,6 +121,21 @@ public class AnswerEntity implements Serializable{
     public void setAns(String ans) {
         this.ans = ans;
     }
+
+
+    public ZonedDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(ZonedDateTime date) {
+        this.date = date;
+    }
+
+    public UsersEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UsersEntity user) {
 
     public Timestamp getDate() {
         return date;
@@ -82,6 +150,7 @@ public class AnswerEntity implements Serializable{
     }
 
     public void setUser(UserEntity user) {
+
         this.user = user;
     }
 
@@ -92,6 +161,9 @@ public class AnswerEntity implements Serializable{
     public void setQuestion(QuestionEntity question) {
         this.question = question;
     }
+
+}
+
 
  /* public RoleEntity(@NotNull int uuid) {
         this.uuid = uuid;
@@ -112,3 +184,4 @@ public class AnswerEntity implements Serializable{
             return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
         }
 }
+
