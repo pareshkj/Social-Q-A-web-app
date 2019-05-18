@@ -18,9 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-/**
- * Service class for question related operations
- */
+
 @Service
 public class QuestionService {
 
