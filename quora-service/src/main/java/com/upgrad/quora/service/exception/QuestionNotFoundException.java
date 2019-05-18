@@ -3,7 +3,6 @@ package com.upgrad.quora.service.exception;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 
-
 public class QuestionNotFoundException extends Exception {
     private final String code;
     private final String errorMessage;

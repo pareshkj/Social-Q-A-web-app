@@ -34,7 +34,7 @@ public class UserEntity {
     @Column(name = "uuid")
     @Size(max = 200)
     @NotNull
-    private String uuid;git
+    private String uuid;
 
     @Column(name = "firstname")
     @NotNull
