@@ -3,12 +3,11 @@ package com.upgrad.quora.service.exception;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 
-
-public class AnswerNotFoundException extends Exception {
+public class QuestionNotFoundException extends Exception {
     private final String code;
     private final String errorMessage;
 
-    public AnswerNotFoundException(final String code, final String errorMessage) {
+    public QuestionNotFoundException(final String code, final String errorMessage) {
         this.code = code;
         this.errorMessage = errorMessage;
     }
@@ -35,6 +34,4 @@ public class AnswerNotFoundException extends Exception {
     public String getErrorMessage() {
         return errorMessage;
     }
-
 }
-
